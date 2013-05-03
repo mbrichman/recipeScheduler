@@ -9,10 +9,11 @@
 <body>
 <header>
   <div class='wrapper'>
-    <h1 id="recipes">Recipes</h1>
-    <nav><%= link_to 'Home', '/' %> | <%= link_to 'Contact', '#' %></nav>
+    <nav><%= link_to 'Home', root_path %> |
+      <%= link_to 'Search', search_recipe_path %> |
+      <%= link_to 'Contact', '#' %></nav>
   </div>
-  
+
 </header>
 <%= yield %>
 

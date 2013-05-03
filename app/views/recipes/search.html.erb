@@ -1,0 +1,15 @@
+<h1>Receipe Search</h1>
+<h2 id="enter_an_ingredient_to_search">Enter an Ingredient to Search</h2>
+<%= form_tag '/recipes', method: 'get' do %>
+<%= label_tag :ingredient %>
+<%=  text_field_tag :ingredient, nil, size:'75', placeholder:'Type an ingredient here' %>
+
+<p><%= submit_tag 'Search' %></p>
+<% end %>
+<p></p>
+  <%= form_tag '/parse', method: 'post' do %>
+  <%= label_tag :url %>
+  <%=  text_field_tag :url, nil, size:'75', placeholder:'Type a URL to a recipe here' %>
+
+  <p><%= submit_tag 'Import' %></p>
+  <% end %>

@@ -3,10 +3,13 @@
 </h2>
 <h3>Ingredients</h3>
 <% @ingredients.each do |i| %>
-<p><%= i.text %></p>
+<p><%= i %></p>
 <% end %>
 <p
 ><h3>Directions</h3>
 <% @directions.each do |d| %>
-<p><%= d.text %></p>
+<p><%= d %></p>
 <% end %>
+
+<p><%= link_to 'Add to Recipe Box', parse_path + '?id='+(params[:url]), method: 'post' %></p>
+<%= params[:url] %>

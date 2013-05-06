@@ -1,7 +1,7 @@
 <div class='wrapper'>
   <% @recipes.each do |r| %>
   <div class='recipe'>
-    <%= image_tag r[:url] %><%= link_to r[:name], "/recipes/#{r[:id]}" %> <br>(<%= r[:source] %>)
+    <%= image_tag r[:url] %><%= link_to r[:name], "/recipes/yummly/#{r[:id]}" %> <br>(<%= r[:source] %>)
   </div>
   <% end %>
 </div>

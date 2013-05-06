@@ -31,7 +31,23 @@ class RecipesController < ApplicationController
     end
   end
 
+  def edit
+    @recipe = Recipe.find_by_id(params[:id])
+  end
+
+  def update
+    m = Recipe.find_by_id(params[:id])
+    m.menu_id = params[:menu_id]
+    m.save
+
+    redirect_to recipe_url(params[:id])
+  end
+
   def show
+    @recipe = Recipe.find_by_id(params[:id])
+  end
+
+  def show_yummly
     app_id = '0b8b841f'
     app_key = 'b766cf986e0ebf2cc801af09229e7d50'
     access_key = "?_app_id=#{app_id}&_app_key=#{app_key}"
@@ -41,14 +57,43 @@ class RecipesController < ApplicationController
   end
 
   def add_recipe
-    redirect_to '/recipes'
+    url = params[:id]
+    doc = Nokogiri::HTML(open(url))
+    ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
+    directions_temp = doc.css('div.fn_instructions > p')
+    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }
+    @directions = directions_temp.collect { |dir| dir.text.strip }
+    r = Recipe.new
+    r.name = doc.css('h1.fn_name').text
+    r.image_url = doc.css('a#recipe-image').first[:href]
+    r.source = URI.parse(url).hostname
+    r.source_url = url
+    r.save
+    @ingredients.each do |i|
+      step = Ingredient.new
+      step.ingredient = i
+      step.step_type = 'I'
+      step.recipe_id = r.id
+      step.save
+    end
+    @directions.each do |d|
+      step = Ingredient.new
+      step.ingredient = d
+      step.step_type = 'D'
+      step.recipe_id = r.id
+      step.save
+    end
+
+    redirect_to 'http://localhost:3000/'
   end
 
   def parse
     url = params[:url]
     doc = Nokogiri::HTML(open(url))
-    @ingredients = doc.css('ul.kv-ingred-list1 > li')
-    @directions = doc.css('div.fn_instructions > p')
+    ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
+    directions_temp = doc.css('div.fn_instructions > p')
+    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }
+    @directions = directions_temp.collect { |dir| dir.text.strip }
   end
 
   def create
@@ -61,6 +106,7 @@ class RecipesController < ApplicationController
     r = Recipe.new
     r.name = @recipe['name']
     r.source = @recipe['source']['sourceDisplayName']
+    # r.source_url = ['source']['sourceRecipeUrl']
     r.image_url = @recipe['images'][0]['hostedLargeUrl']
     r.save
     @recipe['ingredientLines'].each do |i|
@@ -70,6 +116,13 @@ class RecipesController < ApplicationController
       ingr.save
     end
     redirect_to root_path
+  end
+
+  def destroy
+    @recipe = Recipe.find_by_id(params[:id])
+    @recipe.destroy
+
+    redirect_to root_url
   end
 
 end

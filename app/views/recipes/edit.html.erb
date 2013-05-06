@@ -1,0 +1,15 @@
+<h1><%= @recipe.name %></h1>
+
+<h2>Ingredients</h2>
+<ul>
+<% @recipe.ingredients.each do |i| %>
+<li><%= i.ingredient %></li>
+<% end %>
+</ul>
+
+
+<%= form_tag(recipe_url(@recipe.id), method: 'put') do %>
+<%= select_tag :menu_id, options_from_collection_for_select(Menu.all, :id, :name), :prompt => "Choose Menu" %>
+<%= submit_tag 'Save Recipe' %>
+
+<% end %>

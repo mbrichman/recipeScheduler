@@ -1,0 +1,30 @@
+<h1>Menus</h1>
+
+<p><%= link_to 'Add a New Menu', new_menu_url %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Menu date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @menus.each do |menu| %>
+    <tr>
+      <td><%= menu.name %></td>
+      <td><%= menu.menu_date %></td>
+  
+      <td><%= link_to 'Show', menu_url(menu) %></td>
+      <td><%= link_to 'Edit', edit_menu_url(menu) %></td>
+      <td><%= link_to 'Destroy', menu_url(menu), method: 'delete', data: { confirm: "Do you really want to delete this menu?" } %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

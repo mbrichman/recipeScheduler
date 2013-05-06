@@ -1,0 +1,15 @@
+<h2 id="">
+  <%= @recipe['name'] %>
+</h2>
+<h3>Ingredients</h3>
+<% @recipe['ingredientLines'].each do |i| %>
+<p><%= i %></p>
+<% end %>
+
+<h4>Source Information</h4>
+<p>This Recipe Courtesy of: <%= link_to @recipe['source']['sourceDisplayName'],@recipe['source']['sourceRecipeUrl'], target: '_blank' %></p>
+
+<p><%= link_to 'Add to Recipe Box', '/recipes/'+'?id='+(@recipe['id']), method: 'post' %></p>
+
+<%= @recipe['images'][0]['hostedLargeUrl'] %><br>
+

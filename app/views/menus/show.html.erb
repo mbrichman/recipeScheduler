@@ -1,0 +1,17 @@
+<h1>Menu #<%= @menu.id %></h1>
+
+<p>
+  <b>Name:</b>
+  <%= @menu.name %>
+</p>
+
+<p>
+  <b>Menu date:</b>
+  <%= @menu.menu_date %>
+</p>
+<h2>Recipes for this Menu:</h2>
+<% @menu.recipes.each do |r| %>
+<%= link_to r.name, r.source_url, target: '_blank' %><br/>
+<% end %>
+
+

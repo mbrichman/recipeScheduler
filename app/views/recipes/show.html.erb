@@ -1,15 +1,14 @@
-<h2 id="">
-  <%= @recipe['name'] %>
-</h2>
-<h3>Ingredients</h3>
-<% @recipe['ingredientLines'].each do |i| %>
-<p><%= i %></p>
+<h1><%= @recipe.name %></h1>
+
+<h2>Ingredients</h2>
+<ul>
+<% @recipe.ingredients.each do |i| %>
+<li><%= i.ingredient %></li>
 <% end %>
+</ul>
 
-<h4>Source Information</h4>
-<p>This Recipe Courtesy of: <%= link_to @recipe['source']['sourceDisplayName'],@recipe['source']['sourceRecipeUrl'], target: '_blank' %></p>
+<%= link_to 'Add to Menu...', edit_recipe_path(@recipe.id) %>
 
-<p><%= link_to 'Add to Recipe Box', '/recipes/'+'?id='+(@recipe['id']), method: 'post' %></p>
+<p><%= link_to 'Delete this recipe...', recipe_path(@recipe), method: 'delete' %>
 
-<%= @recipe['images'][0]['hostedLargeUrl'] %><br>
-
+</p>

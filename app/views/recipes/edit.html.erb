@@ -6,6 +6,12 @@
 <li><%= i.ingredient %></li>
 <% end %>
 </ul>
+<h2>Directions</h2>
+<ul>
+<% @recipe.ingredients.where(:step_type => 'D').each do |d| %>
+<li><%= d.ingredient %></li>
+<% end %>
+</ul>
 
 
 <%= form_tag(recipe_url(@recipe.id), method: 'put') do %>

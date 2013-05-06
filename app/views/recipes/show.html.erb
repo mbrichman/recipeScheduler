@@ -6,6 +6,12 @@
 <li><%= i.ingredient %></li>
 <% end %>
 </ul>
+<h2>Directions</h2>
+<ul>
+<% @recipe.ingredients.where(:step_type => 'D').each do |d| %>
+<li><%= d.ingredient %></li>
+<% end %>
+</ul>
 
 <%= link_to 'Add to Menu...', edit_recipe_path(@recipe.id) %>
 

@@ -61,11 +61,15 @@ class RecipesController < ApplicationController
     doc = Nokogiri::HTML(open(url))
     ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
     directions_temp = doc.css('div.fn_instructions > p')
-    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }
-    @directions = directions_temp.collect { |dir| dir.text.strip }
+    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }.select {|i| i != ""}
+    @directions = directions_temp.collect { |dir| dir.text.strip }.select {|i| i != ""}
     r = Recipe.new
     r.name = doc.css('h1.fn_name').text
-    r.image_url = doc.css('a#recipe-image').first[:href]
+    if doc.css('a#recipe-image').count != 0
+      r.image_url = doc.css('a#recipe-image').first[:href]
+    else
+      r.image_url = 'No Image'
+    end
     r.source = URI.parse(url).hostname
     r.source_url = url
     r.save

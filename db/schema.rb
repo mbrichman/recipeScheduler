@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504035035) do
+ActiveRecord::Schema.define(:version => 20130507011608) do
 
   create_table "ingredients", :force => true do |t|
     t.text     "ingredient"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20130504035035) do
     t.string   "image_url"
     t.integer  "menu_id"
     t.string   "source_url"
+    t.string   "key_temps"
   end
 
 end

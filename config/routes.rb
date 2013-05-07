@@ -16,6 +16,8 @@ ReceipeScheduler::Application.routes.draw do
 
   # DELETE
   delete '/menus/:id', controller: 'menus', action: 'destroy'
+
+  get '/menus/:id/cook', controller: 'menus', action: 'cook', as: 'cook_menu'
   #------------------------------
 
 

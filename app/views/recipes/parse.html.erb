@@ -10,6 +10,6 @@
 <% @directions.each do |d| %>
 <p><%= d %></p>
 <% end %>
-
+<%= @temps.inspect %>
 <p><%= link_to 'Add to Recipe Box', parse_path + '?id='+(params[:url]), method: 'post' %></p>
 <%= params[:url] %>

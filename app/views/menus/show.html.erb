@@ -13,5 +13,8 @@
 <% @menu.recipes.each do |r| %>
 <%= link_to r.name, r.source_url, target: '_blank' %><br/>
 <% end %>
+<p>
+  <%= link_to 'Cook This Menu...', cook_menu_path(@menu.id) %>
+</p>
 
 

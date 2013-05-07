@@ -80,13 +80,21 @@ class RecipesController < ApplicationController
       step.recipe_id = r.id
       step.save
     end
-    @directions.each do |d|
+    @temps = []
+    @directions.each_with_index do |d, i|
+      d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [t, i]}
+      # if /\d* degrees/.match(d.ingredient)
+      #   x = /\d* degrees/.match(d.ingredient)
+      #   @temps << /\d{3}/.match(x[0])
+      # end
       step = Ingredient.new
       step.ingredient = d
       step.step_type = 'D'
       step.recipe_id = r.id
       step.save
     end
+    r.key_temps = @temps
+    r.save
 
     redirect_to 'http://localhost:3000/'
   end
@@ -96,8 +104,17 @@ class RecipesController < ApplicationController
     doc = Nokogiri::HTML(open(url))
     ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
     directions_temp = doc.css('div.fn_instructions > p')
-    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }
-    @directions = directions_temp.collect { |dir| dir.text.strip }
+    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }.select {|i| i != ""}
+    @directions = directions_temp.collect { |dir| dir.text.strip }.select {|i| i != ""}
+    @temps = []
+    @directions.each_with_index do |d, i|
+      d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [t, i]}
+      #old regex that did not get each temp in the instruction
+      # if /\d* degrees/.match(d)
+      #   x = /\d* degrees/.match(d)
+      #   @temps << /\d{3}/.match(x[0])[0]
+      # end
+    end
   end
 
   def create

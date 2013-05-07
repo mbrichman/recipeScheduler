@@ -16,7 +16,7 @@ class MenusController < ApplicationController
     @menu = Menu.new
     @menu.name = params[:name]
     @menu.menu_date = params[:menu_date]
-    
+
     if @menu.save
             redirect_to menus_url
           else
@@ -32,12 +32,16 @@ class MenusController < ApplicationController
     @menu = Menu.find_by_id(params[:id])
     @menu.name = params[:name]
     @menu.menu_date = params[:menu_date]
-    
+
     if @menu.save
-            redirect_to menus_url
-          else
+      redirect_to menus_url
+    else
       render 'edit'
     end
+  end
+
+  def cook
+    @menu = Menu.find_by_id(params[:id])
   end
 
   def destroy

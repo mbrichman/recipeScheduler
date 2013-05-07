@@ -1,1 +1,27 @@
-<%= @menu.recipes.inspect %>
+<h1>Menu for <%= @menu.menu_date %></h1>
+
+<h2>Recipes</h2>
+<ol>
+  <% @menu.recipes.each do |r| %>
+  <li><%= r.name %></li>
+  <% end %>
+</ol>
+
+<h2>Recipe Steps</h2>
+<table>
+  <th>Recipe</th>
+  <th>Step</th>
+  <th>Key Temps</th>
+    <% @menu.recipes.each do |r| %>
+      <% r.ingredients.where(step_type: 'D' ).each_with_index do |s, i| %>
+  <tr>
+      <td><%= r.name %></td>
+      <td><%= s.ingredient %></td>
+      <td><%= eval(r.key_temps)[i] %></td>
+  </tr>
+      <% end %>
+    <% end %>
+
+
+
+</table>

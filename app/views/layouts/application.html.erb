@@ -27,6 +27,13 @@
             <li><%= link_to "Menus", "/menus" %></li>
             <li><%= link_to "Search", "/search" %></li>
             <li><a href="#about">About</a></li>
+            <% if current_user %>
+              <li><a href='#'><%= current_user.email %> is signed in.</a></li>
+              <li id='user_header'><%= link_to 'Log Out', logout_path, method: 'delete' %></li>
+            <% else %>
+              <li id='user_header'><%= link_to 'Sign Up', signup_path %></li>
+              <li id='user_header'><%= link_to 'Log In', login_path %></li>
+            <% end %>
           </ul>
         </div>
       </div>
@@ -47,7 +54,7 @@
     <hr>
 
     <footer>
-      <p>&copy; Company 2012</p>
+      <p>&copy; Company 2013</p>
     </footer>
 
   </div>

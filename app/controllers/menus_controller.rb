@@ -1,5 +1,7 @@
 class MenusController < ApplicationController
 
+  before_filter :authorize, only: [:edit, :update]
+
   def index
     @menus = Menu.all
   end

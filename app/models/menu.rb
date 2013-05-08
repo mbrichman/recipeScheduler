@@ -1,3 +1,6 @@
 class Menu < ActiveRecord::Base
-  has_many :recipes
+  belongs_to  :user
+  has_many    :menurecipejoins
+  has_many    :recipes,
+              :through => :menurecipejoins
 end

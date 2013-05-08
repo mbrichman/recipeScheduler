@@ -6,16 +6,11 @@
 <li><%= i.ingredient %></li>
 <% end %>
 </ul>
-<h2>Directions</h2>
-<ul>
-<% @recipe.ingredients.where(:step_type => 'D').each do |d| %>
-<li><%= d.ingredient %></li>
-<% end %>
-</ul>
 
 
-<%= form_tag(recipe_url(@recipe.id), method: 'put') do %>
-<%= select_tag :menu_id, options_from_collection_for_select(Menu.all, :id, :name), :prompt => "Choose Menu" %>
+<%= form_tag(menurecipejoins_path, method: 'post') do %>
+<%= select_tag :menu_id, options_from_collection_for_select(Menu.where(:user_id => session[:user_id]), :id, :name), :prompt => "Choose Menu" %>
+  <%= hidden_field_tag :recipe_id, @recipe.id %>
 <%= submit_tag 'Save Recipe' %>
 
 <% end %>

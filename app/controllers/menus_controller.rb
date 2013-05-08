@@ -3,7 +3,7 @@ class MenusController < ApplicationController
   before_filter :authorize, only: [:edit, :update]
 
   def index
-    @menus = Menu.all
+    @menus = Menu.where(:user_id => session[:user_id])
   end
 
   def show
@@ -18,6 +18,7 @@ class MenusController < ApplicationController
     @menu = Menu.new
     @menu.name = params[:name]
     @menu.menu_date = params[:menu_date]
+    @menu.user_id = session[:user_id]
 
     if @menu.save
             redirect_to menus_url
@@ -40,6 +41,14 @@ class MenusController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def add_recipe
+    m = Recipe.find_by_id(params[:id])
+    m.menu_id = params[:menu_id]
+    m.save
+
+    redirect_to menus_url
   end
 
   def cook

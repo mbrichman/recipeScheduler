@@ -35,13 +35,13 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find_by_id(params[:id])
   end
 
-  def update
-    m = Recipe.find_by_id(params[:id])
-    m.menu_id = params[:menu_id]
-    m.save
+  # def update
+  #   m = Recipe.find_by_id(params[:id])
+  #   m.menu_id = params[:menu_id]
+  #   m.save
 
-    redirect_to recipe_url(params[:id])
-  end
+  #   redirect_to recipe_url(params[:id])
+  # end
 
   def show
     @recipe = Recipe.find_by_id(params[:id])

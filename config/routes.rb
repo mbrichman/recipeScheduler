@@ -6,6 +6,7 @@ ReceipeScheduler::Application.routes.draw do
 
   resources :users
   resources :sessions
+  resources :menurecipejoins
 
 
   # get '/', controller: 'Recipes', action: 'home', as: 'root'
@@ -23,6 +24,7 @@ ReceipeScheduler::Application.routes.draw do
   # UPDATE
   get '/menus/:id/edit', controller: 'menus', action: 'edit', as: 'edit_menu'
   put '/menus/:id', controller: 'menus', action: 'update'
+  put '/menus/recipe/:id', controller: 'menus', action: 'add_recipe', as: 'add_recipe'
 
   # DELETE
   delete '/menus/:id', controller: 'menus', action: 'destroy'
@@ -41,7 +43,7 @@ ReceipeScheduler::Application.routes.draw do
 
   #UPDATE
   get '/recipes/:id/edit', controller: 'Recipes', action: 'edit', as: 'edit_recipe'
-  put '/recipes/:id', controller: 'Recipes', action: 'update'
+  # put '/recipes/:id', controller: 'Recipes', action: 'update'
 
   #SEARCH
   get '/search', controller: 'Recipes', action: 'search', as: 'search_recipe'

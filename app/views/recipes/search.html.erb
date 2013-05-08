@@ -6,10 +6,3 @@
 
 <p><%= submit_tag 'Search' %></p>
 <% end %>
-<p></p>
-  <%= form_tag '/parse', method: 'get' do %>
-  <%= label_tag :url %>
-  <%=  text_field_tag :url, nil, size:'75', placeholder:'Type a URL to a recipe here' %>
-
-  <p><%= submit_tag 'Import' %></p>
-  <% end %>

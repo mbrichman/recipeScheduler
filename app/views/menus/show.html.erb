@@ -1,9 +1,4 @@
-<h1>Menu #<%= @menu.id %></h1>
-
-<p>
-  <b>Name:</b>
-  <%= @menu.name %>
-</p>
+<h1><%= @menu.name %></h1>
 
 <p>
   <b>Menu date:</b>
@@ -14,7 +9,8 @@
 <%= link_to r.name, r.source_url, target: '_blank' %><br/>
 <% end %>
 <p>
+<div>
   <%= link_to 'Cook This Menu...', cook_menu_path(@menu.id) %>
-</p>
+</div>
 
 

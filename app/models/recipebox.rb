@@ -3,4 +3,8 @@ class Recipebox < ActiveRecord::Base
   has_many   :recipeboxjoins
   has_many   :recipes, :through => :recipeboxjoins
   belongs_to :user
+
+  def directions(recipe_id)
+    return Ingredient.where(:recipe_id => recipe_id)
+  end
 end

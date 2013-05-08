@@ -23,16 +23,17 @@
           <ul class="nav">
 
             <li><%= link_to "Home", "/" %></li>
-            <li><%= link_to "Recipes", "/recipes" %></li>
+            <li><%= link_to "Yummly", "/recipes" %></li>
             <li><%= link_to "Menus", "/menus" %></li>
             <li><%= link_to "Search", "/search" %></li>
+            <li><%= link_to "Import", "/import" %></li>
             <li><a href="#about">About</a></li>
             <% if current_user %>
-              <li><a href='#'><%= current_user.email %> is signed in.</a></li>
+        <!--       <li><a href='#'><%= current_user.email %> is signed in.</a></li> -->
               <li id='user_header'><%= link_to 'Log Out', logout_path, method: 'delete' %></li>
             <% else %>
-              <li id='user_header'><%= link_to 'Sign Up', signup_path %></li>
               <li id='user_header'><%= link_to 'Log In', login_path %></li>
+              <li id='user_header'><%= link_to 'Sign Up', signup_path %></li>
             <% end %>
           </ul>
         </div>

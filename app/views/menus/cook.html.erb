@@ -9,15 +9,22 @@
 
 <h2>Recipe Steps</h2>
 <table>
+  <col width="150">
+  <col width="700">
+  <col width="50">
   <th>Recipe</th>
   <th>Step</th>
   <th>Key Temps</th>
     <% @menu.recipes.each do |r| %>
-      <% r.ingredients.where(step_type: 'D' ).each_with_index do |s, i| %>
+      <% r.get_directions.each do |s| %>
   <tr>
       <td><%= r.name %></td>
       <td><%= s.ingredient %></td>
-      <td><%= eval(r.key_temps)[i] %></td>
+      <% if (s.ingredient.scan(/\d{3}+(?=\sdegrees)/)[0].to_s).present? %>
+        <td><%= (s.ingredient.scan(/\d{3}+(?=\sdegrees)/)[0].to_s) + "°" %></td>
+      <% else %>
+        <td></td>
+      <% end %>
   </tr>
       <% end %>
     <% end %>

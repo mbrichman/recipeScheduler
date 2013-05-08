@@ -44,6 +44,7 @@ class MenusController < ApplicationController
 
   def cook
     @menu = Menu.find_by_id(params[:id])
+    @temps = Array.new
   end
 
   def destroy

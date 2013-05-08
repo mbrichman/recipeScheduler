@@ -8,7 +8,8 @@ ReceipeScheduler::Application.routes.draw do
   resources :sessions
 
 
-  get '/', controller: 'Recipes', action: 'home', as: 'root'
+  # get '/', controller: 'Recipes', action: 'home', as: 'root'
+  root :to => 'Recipes#home'
 
   # Routes for the Menu resource:
   # CREATE
@@ -44,8 +45,9 @@ ReceipeScheduler::Application.routes.draw do
 
   #SEARCH
   get '/search', controller: 'Recipes', action: 'search', as: 'search_recipe'
-  get '/parse', controller: 'Recipes', action: 'parse'
-  post '/parse', controller: 'Recipes', action: 'add_recipe', as: 'parse'
+  # get '/parse', controller: 'Recipes', action: 'parse'
+  get '/import', controller: 'Recipes', action: 'import', as: 'import'
+  post '/import', controller: 'Recipes', action: 'add_recipe', as: 'import'
 
   #DELETE
   delete '/recipes/:id', controller: 'Recipes', action: 'destroy', as: 'recipe'

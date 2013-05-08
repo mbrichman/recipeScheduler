@@ -2,13 +2,13 @@
 
 <h2>Ingredients</h2>
 <ul>
-<% @recipe.ingredients.where(:step_type => 'I').each do |i| %>
+<% @recipe.get_ingredients.each do |i| %>
 <li><%= i.ingredient %></li>
 <% end %>
 </ul>
 <h2>Directions</h2>
 <ol>
-<% @recipe.ingredients.where(:step_type => 'D').each do |d| %>
+<% @recipe.get_directions.each do |d| %>
 <li><%= d.ingredient %></li>
 <% end %>
 </ol>

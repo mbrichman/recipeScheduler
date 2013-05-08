@@ -96,7 +96,7 @@ class RecipesController < ApplicationController
     r.key_temps = Hash[*@temps.flatten].to_s
     r.save
 
-    redirect_to 'http://localhost:3000/'
+    redirect_to root_path
   end
 
   def parse
@@ -115,6 +115,10 @@ class RecipesController < ApplicationController
       #   @temps << /\d{3}/.match(x[0])[0]
       # end
     end
+  end
+
+  def import
+
   end
 
   def create

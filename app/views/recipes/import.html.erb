@@ -1,0 +1,8 @@
+<h1>Receipe Import</h1>
+
+  <%= form_tag import_path, method: 'post' do %>
+  <%= label_tag :id, 'Import' %>
+  <%=  text_area_tag :id, nil, {placeholder:'Paste a URL for a recipe here', size:'500'} %>
+
+  <p><%= submit_tag 'Import' %></p>
+  <% end %>

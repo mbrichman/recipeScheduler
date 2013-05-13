@@ -35,13 +35,15 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find_by_id(params[:id])
   end
 
-  # def update
-  #   m = Recipe.find_by_id(params[:id])
-  #   m.menu_id = params[:menu_id]
-  #   m.save
+  def parse_url(recipeurl)
+    url = recipeurl
+    @doc = Nokogiri::HTML(open(url))
+    ingredients_temp = @doc.css('ul.kv-ingred-list1 > li')
+    directions_temp = @doc.css('div.fn_instructions > p')
+    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }.select {|i| i != ""}
+    @directions = directions_temp.collect { |dir| dir.text.strip }.select {|i| i != ""}
 
-  #   redirect_to recipe_url(params[:id])
-  # end
+  end
 
   def show
     @recipe = Recipe.find_by_id(params[:id])
@@ -57,21 +59,18 @@ class RecipesController < ApplicationController
   end
 
   def add_recipe
-    url = params[:id]
-    doc = Nokogiri::HTML(open(url))
-    ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
-    directions_temp = doc.css('div.fn_instructions > p')
-    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }.select {|i| i != ""}
-    @directions = directions_temp.collect { |dir| dir.text.strip }.select {|i| i != ""}
+    parse_url(params[:id])
     r = Recipe.new
-    r.name = doc.css('h1.fn_name').text
-    if doc.css('a#recipe-image').count != 0
-      r.image_url = doc.css('a#recipe-image').first[:href]
+    r.name = @doc.css('h1.fn_name').text
+    if @doc.css('a#recipe-image').count != 0
+      r.image_url = @doc.css('a#recipe-image').first[:href]
+    elsif @doc.css('div#recipe-lead-wrap img#recipe-player-th').present?
+      r.image_url = @doc.css('div#recipe-lead-wrap img#recipe-player-th').map{ |i| i['src']}.first
     else
       r.image_url = 'No Image'
     end
-    r.source = URI.parse(url).hostname
-    r.source_url = url
+    r.source = URI.parse(params[:id]).hostname
+    r.source_url = params[:id]
     r.save
     @ingredients.each do |i|
       step = Ingredient.new
@@ -80,40 +79,30 @@ class RecipesController < ApplicationController
       step.recipe_id = r.id
       step.save
     end
-    @temps = []
-    @directions.each_with_index do |d, i|
-      d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [i,t]}
-      # if /\d* degrees/.match(d.ingredient)
-      #   x = /\d* degrees/.match(d.ingredient)
-      #   @temps << /\d{3}/.match(x[0])
-      # end
-      step = Ingredient.new
-      step.ingredient = d
-      step.step_type = 'D'
-      step.recipe_id = r.id
-      step.save
-    end
-    r.key_temps = Hash[*@temps.flatten].to_s
-    r.save
+    # @temps = []
+    # @directions.each_with_index do |d, i|
+    #   d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [i,t]}
+    #   # if /\d* degrees/.match(d.ingredient)
+    #   #   x = /\d* degrees/.match(d.ingredient)
+    #   #   @temps << /\d{3}/.match(x[0])
+    #   # end
+    #   step = Ingredient.new
+    #   step.ingredient = d
+    #   step.step_type = 'D'
+    #   step.recipe_id = r.id
+    #   step.save
+    # end
+    # r.key_temps = Hash[*@temps.flatten].to_s
+    # r.save
 
     redirect_to root_path
   end
 
   def parse
-    url = params[:url]
-    doc = Nokogiri::HTML(open(url))
-    ingredients_temp = doc.css('ul.kv-ingred-list1 > li')
-    directions_temp = doc.css('div.fn_instructions > p')
-    @ingredients = ingredients_temp.collect { |ing| ing.text.strip }.select {|i| i != ""}
-    @directions = directions_temp.collect { |dir| dir.text.strip }.select {|i| i != ""}
+    parse_url(params[:url])
     @temps = []
     @directions.each_with_index do |d, i|
       d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [t, i]}
-      #old regex that did not get each temp in the instruction
-      # if /\d* degrees/.match(d)
-      #   x = /\d* degrees/.match(d)
-      #   @temps << /\d{3}/.match(x[0])[0]
-      # end
     end
   end
 

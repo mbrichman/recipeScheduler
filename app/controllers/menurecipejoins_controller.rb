@@ -31,7 +31,10 @@ class MenurecipejoinsController < ApplicationController
   end
 
   def destroy
+    mrj = Menurecipejoin.find_by_id(params[:id])
+    mrj.destroy
 
+    redirect_to menu_url(params[:menu_id])
   end
 
 

@@ -1,5 +1,19 @@
 <h1>Menu for <%= @menu.menu_date %></h1>
 
+<% content_for :head do %>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        String, default: 'basicDay';
+    })
+
+  });
+</script>
+<% end %>
+
 <h2>Recipes</h2>
 <ol>
   <% @menu.recipes.each do |r| %>
@@ -9,26 +23,39 @@
 
 <h2>Recipe Steps</h2>
 <table>
-  <col width="150">
-  <col width="700">
+  <col width="100">
+  <col width="600">
   <col width="50">
+  <col width="100">
   <th>Recipe</th>
   <th>Step</th>
   <th>Key Temps</th>
+  <th>Key Times</th>
     <% @menu.recipes.each do |r| %>
       <% r.get_directions.each do |s| %>
   <tr>
       <td><%= r.name %></td>
       <td><%= s.ingredient %></td>
-      <% if (s.ingredient.scan(/\d{3}+(?=\sdegrees)/)[0].to_s).present? %>
-        <td><%= (s.ingredient.scan(/\d{3}+(?=\sdegrees)/)[0].to_s) + "°" %></td>
-      <% else %>
-        <td></td>
-      <% end %>
+        <% if s.extract_temp.present? %>
+          <td><%= s.extract_temp %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+        <% if s.extract_time.present? %>
+          <td><% s.extract_time.each do |time| %>
+             <%= "#{time[0]}<br>".html_safe %>
+             <% end %>
+        </td>
+        <% else %>
+          <td></td>
+        <% end %>
+
   </tr>
       <% end %>
     <% end %>
-
-
-
 </table>
+
+<div id='calendar'>
+
+</div>

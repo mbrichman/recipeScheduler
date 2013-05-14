@@ -10,12 +10,10 @@
 
   <div>
     <%= label_tag :menu_date %><br />
-    <%= date_select_tag :menu_date, @menu.menu_date %>
+    <%= text_field_tag :menu_date, @menu.menu_date %>
   </div>
 
-  
   <div>
     <%= submit_tag "Update Menu" %>
   </div>
-
 <% end %>

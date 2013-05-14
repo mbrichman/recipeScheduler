@@ -5,9 +5,14 @@
   <%= @menu.menu_date %>
 </p>
 <h2>Recipes for this Menu:</h2>
-<% @menu.recipes.each do |r| %>
-<%= link_to r.name, r.source_url, target: '_blank' %><br/>
-<% end %>
+  <table>
+    <% @menu.menurecipejoins.each do |recipe| %>
+      <%= form_tag menurecipejoin_path(recipe.id), method: 'delete' do %>
+      <%= hidden_field_tag :menu_id, recipe.menu_id %>
+      <tr><td><%= Recipe.find(recipe.recipe_id).name %></td><td><%= submit_tag 'Remove' %></td></tr>
+      <% end %>
+    <% end %>
+  </table>
 <p>
 <div>
   <%= link_to 'Cook This Menu...', cook_menu_path(@menu.id) %>

@@ -79,31 +79,15 @@ class RecipesController < ApplicationController
       step.recipe_id = r.id
       step.save
     end
-    # @temps = []
-    # @directions.each_with_index do |d, i|
-    #   d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [i,t]}
-    #   # if /\d* degrees/.match(d.ingredient)
-    #   #   x = /\d* degrees/.match(d.ingredient)
-    #   #   @temps << /\d{3}/.match(x[0])
-    #   # end
-    #   step = Ingredient.new
-    #   step.ingredient = d
-    #   step.step_type = 'D'
-    #   step.recipe_id = r.id
-    #   step.save
-    # end
-    # r.key_temps = Hash[*@temps.flatten].to_s
-    # r.save
-
-    redirect_to root_path
-  end
-
-  def parse
-    parse_url(params[:url])
-    @temps = []
     @directions.each_with_index do |d, i|
-      d.scan(/\d{3}+(?=\sdegrees)/).collect {|t| @temps << [t, i]}
+      step = Ingredient.new
+      step.ingredient = d
+      step.step_type = 'D'
+      step.recipe_id = r.id
+      step.save
     end
+
+    redirect_to recipe_url(r.id)
   end
 
   def import

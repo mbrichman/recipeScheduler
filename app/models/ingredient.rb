@@ -11,7 +11,7 @@ class Ingredient < ActiveRecord::Base
 
   def extract_time
     # if self.ingredient.scan(/[0-9]{1,2}\smin/)[0].present?
-      self.ingredient.scan(/([0-9]{1,2}\shour|[0-9]{1,3}\sminute)/)
+      self.ingredient.scan(/([0-9]{1,2})(\shour|\sminute)/)
     # end
   end
 

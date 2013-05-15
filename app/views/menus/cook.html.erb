@@ -4,16 +4,33 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    // page is now ready, initialize the calendar...
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
 
     $('#calendar').fullCalendar({
-        String, default: 'basicDay';
-    })
+      height: 650,
+      minTime: 7,
+      maxTime: 23,
+      header: {
+        left: '',
+        center: '',
+        right: ''
+        },
+      defaultView: 'agendaDay',
+      editable: true,
+      });
 
-  });
+    });
+
 </script>
 <% end %>
+<div id ='cal-container'>
+  <div id='calendar'>
 
+  </div>
+</div>
 <h2>Recipes</h2>
 <ol>
   <% @menu.recipes.each do |r| %>
@@ -43,8 +60,8 @@
         <% end %>
 
         <% if s.extract_time.present? %>
-          <td><% s.extract_time.each do |time| %>
-             <%= "#{time[0]}<br>".html_safe %>
+          <td><% s.extract_time.each_with_index do |time, i| %>
+             <%= "#{time.join(' ').pluralize}<br>".html_safe %>
              <% end %>
         </td>
         <% else %>
@@ -56,6 +73,4 @@
     <% end %>
 </table>
 
-<div id='calendar'>
 
-</div>

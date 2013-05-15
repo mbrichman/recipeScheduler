@@ -48,3 +48,9 @@ header {
 header nav {
   float: right;
 }
+
+#cal-container{
+  width:250px;
+  height:800px;
+  float: right;
+}

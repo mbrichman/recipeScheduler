@@ -13,4 +13,5 @@
 //= require jquery
 //= require bootstrap.min
 //= require jquery_ujs
+//= require jquery-ui
 //= require_tree .

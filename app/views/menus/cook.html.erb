@@ -1,76 +1,84 @@
+<script>
+  $(function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  });
+</script>
+
 <h1>Menu for <%= @menu.menu_date %></h1>
 
 <% content_for :head do %>
-<script type="text/javascript">
-  $(document).ready(function() {
+  <script type="text/javascript">
+    $(document).ready(function() {
 
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
 
-    $('#calendar').fullCalendar({
-      height: 650,
-      minTime: 7,
-      maxTime: 23,
-      header: {
-        left: '',
-        center: '',
-        right: ''
-        },
-      defaultView: 'agendaDay',
-      editable: true,
+      $('#calendar').fullCalendar({
+        height: 650,
+        minTime: 7,
+        maxTime: 23,
+        header: {
+          left: '',
+          center: '',
+          right: ''
+          },
+        defaultView: 'agendaDay',
+        editable: true,
+        });
+
       });
 
-    });
-
-</script>
+  </script>
 <% end %>
-<div id ='cal-container'>
+<!-- <div id ='cal-container'>
   <div id='calendar'>
 
-  </div>
-</div>
+  </div> -->
+</div >
 <h2>Recipes</h2>
-<ol>
+<script>$("#sortable").sortable();</script>
+<ol id="sortable">
   <% @menu.recipes.each do |r| %>
   <li><%= r.name %></li>
   <% end %>
 </ol>
 
-<h2>Recipe Steps</h2>
-<table>
-  <col width="100">
-  <col width="600">
-  <col width="50">
-  <col width="100">
-  <th>Recipe</th>
-  <th>Step</th>
-  <th>Key Temps</th>
-  <th>Key Times</th>
-    <% @menu.recipes.each do |r| %>
-      <% r.get_directions.each do |s| %>
-  <tr>
-      <td><%= r.name %></td>
-      <td><%= s.ingredient %></td>
-        <% if s.extract_temp.present? %>
-          <td><%= s.extract_temp %></td>
-        <% else %>
-          <td></td>
-        <% end %>
+<div class="row span10">
+  <h2>Recipe Steps</h2>
+  <table class="table">
+    <th>Recipe</th>
+    <th>Step</th>
+    <th>Key Temps</th>
+    <th>Key Times</th>
+    <tbody id="sortable">
+      <% @menu.recipes.each do |r| %>
+        <% r.get_directions.each do |s| %>
+    <tr>
+        <td><%= r.name %></td>
+        <td><%= s.ingredient %></td>
+          <% if s.extract_temp.present? %>
+            <td><%= s.extract_temp %></td>
+          <% else %>
+            <td></td>
+          <% end %>
 
-        <% if s.extract_time.present? %>
-          <td><% s.extract_time.each_with_index do |time, i| %>
-             <%= "#{time.join(' ').pluralize}<br>".html_safe %>
-             <% end %>
-        </td>
-        <% else %>
-          <td></td>
-        <% end %>
+          <% if s.extract_time.present? %>
+            <td><% s.extract_time.each_with_index do |time, i| %>
+               <%= "#{time.join(' ').pluralize}<br>".html_safe %>
+               <% end %>
+          </td>
+          <% else %>
+            <td></td>
+          <% end %>
 
-  </tr>
+    </tr>
+        <% end %>
       <% end %>
-    <% end %>
-</table>
+    </tbody>
+  </table>
+</div>
 
 

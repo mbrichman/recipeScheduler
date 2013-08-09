@@ -1,5 +1,8 @@
 ReceipeScheduler::Application.routes.draw do
 
+  resources :recipetimes
+
+
   get "recipeboxes/show"
 
   get "recipebox/show"

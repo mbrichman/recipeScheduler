@@ -33,10 +33,7 @@
 
   </script>
 <% end %>
-<!-- <div id ='cal-container'>
-  <div id='calendar'>
 
-  </div> -->
 
 <div class="row span12">
   <h2>Recipes</h2>
@@ -48,39 +45,48 @@
   </ol>
 </div>
 
-<div class="row span12">
-  <h2>Recipe Steps</h2>
-  <table class="table">
-    <th>Recipe</th>
-    <th>Step</th>
-    <th>Key Temps</th>
-    <th>Key Times</th>
-    <tbody id="sortable">
-      <% @menu.recipes.each do |r| %>
-        <% r.get_directions.each do |s| %>
-          <tr>
-            <td><%= r.name %></td>
-            <td><%= s.ingredient %></td>
-            <% if s.extract_temp.present? %>
-                <td><%= s.extract_temp %></td>
-              <% else %>
-                <td></td>
-            <% end %>
+    <h2>Recipe Steps</h2>
+<div class="row">
+  <div class="span8">
+    <table class="table">
+      <th>Recipe</th>
+      <th>Step</th>
+      <th>Key Temps</th>
+      <th>Key Times</th>
+      <tbody id="sortable">
+        <% @menu.recipes.each do |r| %>
+          <% r.get_directions.each do |s| %>
+            <tr>
+              <td><%= r.name %></td>
+              <td><%= s.ingredient %></td>
+              <% if s.extract_temp.present? %>
+                  <td><%= s.extract_temp %></td>
+                <% else %>
+                  <td></td>
+              <% end %>
 
-            <% if s.extract_time.present? %>
-              <td>
-                <% s.extract_time.each_with_index do |time, i| %>
-                 <%= "#{time.join(' ').pluralize}<br>".html_safe %>
-                <% end %>
-              </td>
-            <% else %>
-              <td><i class="icon-plus-sign"></i></td>
-            <% end %>
-          </tr>
+              <% if s.extract_time.present? %>
+                <td>
+                  <% s.extract_time.each_with_index do |time, i| %>
+                   <%= "#{time.join(' ').pluralize}<br>".html_safe %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td><i class="icon-plus-sign"></i></td>
+              <% end %>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+  <div class="span3 offset1">
+    <div id ='cal-container'>
+      <div id='calendar'>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 

@@ -2,6 +2,7 @@ class Ingredient < ActiveRecord::Base
   attr_accessible :ingredient, :recipe_id
   belongs_to :recipe
   validates :recipe, presence: true
+  has_many :recipetimes
 
   def extract_temp
     if self.ingredient.scan(/\d{3}+(?=\sdegree)/)[0].present?

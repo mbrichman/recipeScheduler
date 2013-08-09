@@ -11,7 +11,7 @@
   <tr>
     <td><img src="<%= recipe.image_url %>" style="max-width: 100px"></td>
     <td><%= link_to recipe.name, recipe_path(recipe.id) %></td>
-    <td><%= link_to recipe.source, recipe.source_url, target: '_blank' %></td>
+    <td><%= recipe.source %></td>
   </tr>
   <% end %>
 </table>
